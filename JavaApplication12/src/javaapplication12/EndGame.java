@@ -14,14 +14,19 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.PrintWriter;
+import javax.swing.JOptionPane;
 
-public class EndGame {
+public class EndGame extends javax.swing.JFrame{
     void launch(long durationGame) {
         List<String> ranking = this.readInFile();
-        Scanner scan = new Scanner(System.in);
-        if(ranking.size() < 10 || Long.parseLong(ranking.get(9).split("-")[1].trim()) > durationGame) ranking = addInFile(scan.nextLine(), durationGame, ranking); 
-        scan.close();
-        System.out.println(this.printRanking(this.readInFile()));
+        
+        
+        if(ranking.size() < 10 || Long.parseLong(ranking.get(9).split("-")[1].trim()) > durationGame){
+            ranking = addInFile(JOptionPane.showInputDialog("Enter your nickname for registering your score"), durationGame, ranking);
+        } 
+        JOptionPane.showMessageDialog(null,this.printRanking(this.readInFile()));
+        finalPage frame2 = new finalPage();
+        frame2.show();
     }
 
     private List<String> addInFile(String pseudo, long durationGame, List<String> ranking) {
@@ -91,31 +96,6 @@ public class EndGame {
         return s;
     }
 
-    public String printEnd(int maxLengthPseudo, int maxTiming) {
-        String s = "╚";
-        for(int i = 0; i < maxLengthPseudo; i++) s += "═";
-        s += "╩";
-        for(int i = 0; i < maxTiming; i++) s += "═";
-
-        return s += "╝";
-    }
-
-    public String printHeader(int maxLengthPseudo, int maxTiming) {
-        String s = "╔";
-        for(int i = 0; i < maxLengthPseudo; i++) s += "═";
-        s += "╦";
-        for(int i = 0; i < maxTiming; i++) s += "═";
-
-        s += "╗" + this.printNewLine(maxLengthPseudo, maxTiming, "Pseudo", "Timing") + "\n╠";
-
-        for(int i = 0; i < maxLengthPseudo; i++) s += "═";
-        s += "╬";
-        for(int i = 0; i < maxTiming; i++) s += "═";
-        s += "╣";
-
-        return s;
-    }
-
     public String printRanking(List<String> ranking) {
         String print = "";
         final int size = ranking.size();
@@ -131,9 +111,8 @@ public class EndGame {
         maxLengthPseudo += 2;
         maxTiming += 2;
 
-        print = this.printHeader(maxLengthPseudo, maxTiming);
         for(int i = 0; i < size; i++) print += this.printNewLine(maxLengthPseudo, maxTiming, pseudo.get(i), timing.get(i));
 
-        return print + "\n" + this.printEnd(maxLengthPseudo, maxTiming);
+        return "Ranking :\n" + print;
     }
 }

@@ -53,6 +53,8 @@ public class mainGame extends javax.swing.JFrame {
                                     Cases[i][j].setForeground(Color.BLUE);
                                     
                                     if(sudoku.checkWin()) {
+                                        setVisible(false);
+                                        dispose();
                                         final long endGame = System.currentTimeMillis();
                                         end.launch((endGame - startingGame) / 1000);
                                         return;
