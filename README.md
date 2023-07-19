@@ -1,2 +1,2 @@
 # SudokuJava
-Sudoku in Java with Java Swing for an UCI's school project
+Sudoku in Java using Java Swing for an UCI school project
